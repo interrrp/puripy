@@ -18,9 +18,6 @@ class HttpRequest:
     body: str
     version: str
 
-    def __post_init__(self) -> None:
-        self.headers["Content-Length"] = str(len(self.body))
-
     @classmethod
     def from_request(cls, request: str) -> "HttpRequest":
         lines = request.splitlines()
@@ -44,7 +41,7 @@ class HttpRequest:
         )
 
 
-@dataclass(frozen=True)
+@dataclass
 class HttpResponse:
     status_code: int
     status_text: str

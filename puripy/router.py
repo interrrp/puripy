@@ -16,7 +16,15 @@ class Router:
         if handler is None:
             return HttpResponse(404, "Not Found", {}, "")
 
-        return handler(request)
+        response = handler(request)
+
+        # Set default headers by merging dicts
+        response.headers = {
+            "Content-Type": "text/plain",
+            "Content-Length": str(len(response.body)),
+        } | response.headers
+
+        return response
 
     def route(self, path: str) -> Callable[[RouteHandler], RouteHandler]:
         def decorator(handler: RouteHandler) -> RouteHandler:
