@@ -23,4 +23,4 @@ class Server:
 
             self.connection_handler.handle(connection)
 
-        self.connection_listener.stop()
+        self.connection_listener.close()

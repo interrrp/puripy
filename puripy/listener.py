@@ -12,7 +12,7 @@ class ConnectionListener(ABC):
     def start(self) -> None: ...
 
     @abstractmethod
-    def stop(self) -> None: ...
+    def close(self) -> None: ...
 
     @abstractmethod
     def accept(self) -> Connection: ...
@@ -38,7 +38,7 @@ class TcpConnectionListener(ConnectionListener):
         self._socket.settimeout(1)
 
     @override
-    def stop(self) -> None:
+    def close(self) -> None:
         self._socket.close()
 
     @override
