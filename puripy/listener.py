@@ -47,12 +47,13 @@ class TcpConnectionListener(ConnectionListener):
         # KeyboardInterrupt to propagate. Since this really isn't a timeout for
         # our purposes, we will ignore timeout errors.
 
-        try:
-            connection_pair = self._socket.accept()
-        except TimeoutError:
-            return self.accept()
+        while True:
+            try:
+                connection_pair = self._socket.accept()
+            except TimeoutError:
+                continue
 
-        client_socket = connection_pair[0]
-        address: tuple[str, int] = connection_pair[1]
+            client_socket = connection_pair[0]
+            address: tuple[str, int] = connection_pair[1]
 
-        return TcpConnection(client_socket, address)
+            return TcpConnection(client_socket, address)
