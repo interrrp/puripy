@@ -3,8 +3,6 @@ from dataclasses import dataclass, field
 from socket import socket
 from typing import override
 
-NEWLINE = "\n"
-
 
 class Connection(ABC):
     @property
