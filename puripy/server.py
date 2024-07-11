@@ -17,10 +17,11 @@ class Server:
         while True:
             try:
                 connection = self.connection_listener.accept()
+                self.connection_handler.handle(connection)
             except KeyboardInterrupt:
                 self.logger.info("Stopping")
                 break
-
-            self.connection_handler.handle(connection)
+            finally:
+                self.connection_listener.close()
 
         self.connection_listener.close()
